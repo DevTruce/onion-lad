@@ -19,7 +19,7 @@ public class moveController : MonoBehaviour
     [SerializeField] private  LayerMask whatIsGround;
     private  bool isGrounded;
 
-    //////////////////////////////////////////////////////////////////////////////////// LOGIC 
+    //////////////////////////////////////////////////////////////////////////////////// GAME STATES
 
     void Start()
     {
@@ -40,10 +40,9 @@ public class moveController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
           Jump();
-
-
-
     }
+
+    //////////////////////////////////////////////////////////////////////////////////// LOGIC
 
     private void CollisionChecks()
     {
