@@ -6,6 +6,8 @@ public class moveController : MonoBehaviour
   //////////////////////////////////////////////////////////////////////////////////// VARIABLES
     private Rigidbody2D rb;
     private Animator anim;
+
+    private bool faceingRight = true;
     private float xInput;
 
     [SerializeField] private float moveSpeed;
@@ -29,18 +31,17 @@ public class moveController : MonoBehaviour
     {
 
         AnimationControllers();
-
         CollisionChecks();
+        FlipController();
 
         xInput = Input.GetAxisRaw("Horizontal");
 
-        // movement 
-        rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocity.y);
+        Movement();
 
-        // jump
         if(Input.GetKeyDown(KeyCode.Space))
-          if(isGrounded) 
-            rb.linearVelocity = new Vector2(rb.linearVelocity.y,  jumpForce);
+          Jump();
+
+
 
     }
 
@@ -51,10 +52,34 @@ public class moveController : MonoBehaviour
 
     private void AnimationControllers()
     {
-      bool isMoving = rb.linearVelocity.x != 0;
-      anim.SetBool("isMoving", isMoving);
+      anim.SetFloat("xVelocity", rb.linearVelocityX);
+      anim.SetFloat("yVelocity", rb.linearVelocityY);
+      anim.SetBool("isGrounded", isGrounded);
     }
 
+    private void FlipController() {
+      if(rb.linearVelocity.x < 0 && faceingRight) 
+        Flip();
+      else if(rb.linearVelocity.x > 0 && !faceingRight) 
+        Flip();
+    }
+
+    private void Flip()
+    {
+      faceingRight = !faceingRight; // works as a switcher
+      transform.Rotate(0,180,0);
+    }
+
+    private void Jump() 
+    {
+      if(isGrounded) 
+        rb.linearVelocity = new Vector2(rb.linearVelocity.y,  jumpForce);
+    }
+
+    private void Movement() 
+    {
+      rb.linearVelocity = new Vector2(xInput * moveSpeed, rb.linearVelocity.y);
+    }
 
     private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
