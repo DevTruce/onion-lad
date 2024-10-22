@@ -10,6 +10,10 @@ public class GunController : MonoBehaviour
 
     private bool gunFacingRight = true;
 
+    [Header("Bullet")]
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float bulletSpeed;
+
     void Update()
     {
         UnityEngine.Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -21,16 +25,22 @@ public class GunController : MonoBehaviour
         gun.position = transform.position + UnityEngine.Quaternion.Euler(0,0,angle) * new UnityEngine.Vector3(gunDistance,0,0);
 
         if(Input.GetKeyDown(KeyCode.Mouse0))
-          Shoot();
+          Shoot(direction);
 
         GunFlipController(mousePos);
         
         
     }
 
-    public void Shoot() 
+    public void Shoot(UnityEngine.Vector3 direction) 
     {
         gunAnim.SetTrigger("Shoot");
+
+        GameObject newBullet = Instantiate(bulletPrefab, gun.position, UnityEngine.Quaternion.identity);
+
+        newBullet.GetComponent<Rigidbody2D>().linearVelocity = direction.normalized * bulletSpeed;
+
+        Destroy(newBullet, 7);
     }   
 
     public void GunFlip() 

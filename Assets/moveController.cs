@@ -6,7 +6,6 @@ public class moveController : MonoBehaviour
   //////////////////////////////////////////////////////////////////////////////////// VARIABLES
     private Rigidbody2D rb;
     private Animator anim;
-
     private bool faceingRight = true;
     private float xInput;
 
