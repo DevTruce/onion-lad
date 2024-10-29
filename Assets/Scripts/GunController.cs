@@ -90,6 +90,5 @@ public class GunController : MonoBehaviour
         else if (mousePos.x > gun.position.x && !gunFacingRight) 
           GunFlip();
     }
-
 }
 
