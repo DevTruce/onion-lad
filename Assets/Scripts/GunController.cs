@@ -7,6 +7,13 @@ public class GunController : MonoBehaviour
     [SerializeField] private Animator gunAnim;
     [SerializeField] private Transform gun;
     [SerializeField] private float gunDistance = 1.5f;
+    public int currentBullets;
+    public int maxBullets = 15;
+
+    private void Start() 
+    {
+      ReloadGun();
+    }
 
     private bool gunFacingRight = true;
 
@@ -27,21 +34,36 @@ public class GunController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0))
           Shoot(direction);
 
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+          ReloadGun();
+        }
+
         GunFlipController(mousePos);
         
         
     }
-
+ 
     public void Shoot(UnityEngine.Vector3 direction) 
     {
-        gunAnim.SetTrigger("Shoot");
 
-        GameObject newBullet = Instantiate(bulletPrefab, gun.position, UnityEngine.Quaternion.identity);
+      if(currentBullets <= 0) return;
 
-        newBullet.GetComponent<Rigidbody2D>().linearVelocity = direction.normalized * bulletSpeed;
+      gunAnim.SetTrigger("Shoot");
 
-        Destroy(newBullet, 7);
+      currentBullets--;
+
+      GameObject newBullet = Instantiate(bulletPrefab, gun.position, UnityEngine.Quaternion.identity);
+
+      newBullet.GetComponent<Rigidbody2D>().linearVelocity = direction.normalized * bulletSpeed;
+
+      Destroy(newBullet, 7);
     }   
+
+    private void ReloadGun() 
+    {
+      currentBullets = maxBullets;
+    }
 
     public void GunFlip() 
     {

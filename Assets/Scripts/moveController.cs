@@ -47,7 +47,7 @@ public class moveController : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
     }
-
+ 
     private void AnimationControllers()
     {
       anim.SetFloat("xVelocity", rb.linearVelocityX);

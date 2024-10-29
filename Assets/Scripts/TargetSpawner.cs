@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D.IK;
-
+ 
 public class TargetSpawner : MonoBehaviour
 {
     [SerializeField] private Sprite[] targetSprite;
