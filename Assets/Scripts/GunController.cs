@@ -7,8 +7,9 @@ public class GunController : MonoBehaviour
     [SerializeField] private Animator gunAnim;
     [SerializeField] private Transform gun;
     [SerializeField] private float gunDistance = 1.5f;
-    public int currentBullets;
-    public int maxBullets = 15;
+    [SerializeField] private int maxBullets = 15;
+
+    private int currentBullets;
 
     private void Start() 
     {
@@ -48,6 +49,8 @@ public class GunController : MonoBehaviour
     {
 
       gunAnim.SetTrigger("Shoot");
+      UI.instance.UpdateAmmoText(currentBullets, maxBullets);
+
 
       GameObject newBullet = Instantiate(bulletPrefab, gun.position, UnityEngine.Quaternion.identity);
 
@@ -59,6 +62,8 @@ public class GunController : MonoBehaviour
     private void ReloadGun() 
     {
       currentBullets = maxBullets;
+      UI.instance.UpdateAmmoText(currentBullets, maxBullets);
+
     }
 
     public bool HaveBullets() 
