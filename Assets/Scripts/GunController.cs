@@ -24,30 +24,31 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
-        UnityEngine.Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        UnityEngine.Vector3 direction = mousePos - transform.position;
+      if (UI.instance.canPlayerShoot == false) return;
 
-        gun.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,0,Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg));
+      UnityEngine.Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+      UnityEngine.Vector3 direction = mousePos - transform.position;
 
-        float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
-        gun.position = transform.position + UnityEngine.Quaternion.Euler(0,0,angle) * new UnityEngine.Vector3(gunDistance,0,0);
+      gun.rotation = UnityEngine.Quaternion.Euler(new UnityEngine.Vector3(0,0,Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg));
 
-        if(Input.GetKeyDown(KeyCode.Mouse0) && HaveBullets())
-          Shoot(direction);
+      float angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
+      gun.position = transform.position + UnityEngine.Quaternion.Euler(0,0,angle) * new UnityEngine.Vector3(gunDistance,0,0);
 
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-          ReloadGun();
-        }
+      if(Input.GetKeyDown(KeyCode.Mouse0) && HaveBullets())
+        Shoot(direction);
 
-        GunFlipController(mousePos);
+      if(Input.GetKeyDown(KeyCode.R))
+      {
+        ReloadGun();
+      }
+
+      GunFlipController(mousePos);
         
         
     }
  
     public void Shoot(UnityEngine.Vector3 direction) 
     {
-
       gunAnim.SetTrigger("Shoot");
       UI.instance.UpdateAmmoText(currentBullets, maxBullets);
 

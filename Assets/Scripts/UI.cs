@@ -10,6 +10,7 @@ public class UI : MonoBehaviour
    [SerializeField] private TextMeshProUGUI timerText;
    [SerializeField] private TextMeshProUGUI ammoText;
    private int scoreValue;
+   public bool canPlayerShoot;
 
    [SerializeField] private GameObject TryAgainButton;
 
@@ -20,7 +21,7 @@ public class UI : MonoBehaviour
 
     void Start()
     {
-        
+        canPlayerShoot = true;
     }
 
 
@@ -47,6 +48,7 @@ public class UI : MonoBehaviour
     public void OpenEndScreen() 
     {
       Time.timeScale = 0;
+      canPlayerShoot = false;
       TryAgainButton.SetActive(true);
     }
 

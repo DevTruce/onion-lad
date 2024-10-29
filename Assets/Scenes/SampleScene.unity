@@ -240,6 +240,7 @@ MonoBehaviour:
   scoreText: {fileID: 326045104}
   timerText: {fileID: 1294650990}
   ammoText: {fileID: 611753929}
+  canPlayerShoot: 0
   TryAgainButton: {fileID: 1989431108}
 --- !u!1 &109176609
 GameObject:
